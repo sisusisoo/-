@@ -61,7 +61,7 @@ int main() {
 	int col, row, value;
 
 
-	printf("Enter the size of rows and colume, the number of non-zero terms");
+	printf("Enter the size of rows and colume, the number of non-zero terms:");
 	scanf_s("%d %d %d", &rows_size,&cols_size,&nzt_size);
 
 	m.rows = rows_size;
@@ -69,7 +69,7 @@ int main() {
 	m.terms = nzt_size;
 
 
-	printf("Enter row,column, and value pairs in order:");
+	printf("Enter row,column, and value pairs in order:\n");
 
 	for (int i = 0; i < nzt_size; i++) {
 		scanf_s("%d %d %d", &row, &col, &value);
