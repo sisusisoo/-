@@ -20,29 +20,28 @@ typedef struct {
 
 SparseMatrix m_t2(SparseMatrix a) {//동적메모리할당을 
 
-	SparseMatrix *b;
-	b = (SparseMatrix*)malloc(sizeof(SparseMatrix));
+	SparseMatrix b;
 
 
 	int bindex;
-	(*b).rows = a.rows;
-	(*b).cols = a.cols;
-	(*b).terms = a.terms;
+	b.rows = a.rows;
+	b.cols = a.cols;
+	b.terms = a.terms;
 	if (a.terms > 0) {
 		bindex=0;
 		for (int c = 0; c < a.cols; c++) {
 			for (int i = 0; i < a.terms; i++) {
 				if (a.data[i].col == c) {
-					(*b).data[bindex].row = a.data[i].col;
-					(*b).data[bindex].col = a.data[i].row;
-					(*b).data[bindex].value = a.data[i].value;
+					b.data[bindex].row = a.data[i].col;
+					b.data[bindex].col = a.data[i].row;
+					b.data[bindex].value = a.data[i].value;
 					bindex++;
 
 				}
 			}
 		}
 	}
-	return *b;
+	return b;
 }
 
 void matrix_print(SparseMatrix a) {
@@ -55,7 +54,7 @@ void matrix_print(SparseMatrix a) {
 }
 
 int main() {
-	SparseMatrix m;
+	SparseMatrix *m=(SparseMatrix*)malloc(sizeof(SparseMatrix));
 
 	int rows_size, cols_size, nzt_size;
 	int col, row, value;
@@ -64,26 +63,28 @@ int main() {
 	printf("Enter the size of rows and colume, the number of non-zero terms:");
 	scanf_s("%d %d %d", &rows_size,&cols_size,&nzt_size);
 
-	m.rows = rows_size;
-	m.cols = cols_size;
-	m.terms = nzt_size;
+	(*m).rows = rows_size;
+	(*m).cols = cols_size;
+	(*m).terms = nzt_size;
 
 
 	printf("Enter row,column, and value pairs in order:\n");
 
 	for (int i = 0; i < nzt_size; i++) {
 		scanf_s("%d %d %d", &row, &col, &value);
-		m.data[i].col = col;
-		m.data[i].row = row;
-		m.data[i].value = value;
+		(*m).data[i].col = col;
+		(*m).data[i].row = row;
+		(*m).data[i].value = value;
 
 	}
 
 	
 
 	SparseMatrix result;
-	result = m_t2(m);
+	result = m_t2(*m);
 	matrix_print(result);
+	free(m);
+
 	return 0;
 
 
